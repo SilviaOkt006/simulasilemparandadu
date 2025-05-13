@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulasi Kejadian Acak - Lempar Dadu</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #f9f9f9, #e0f7fa);
+      text-align: center;
+      padding: 30px;
+      color: #333;
+    }
+    h1 {
+      color: #00796b;
+    }
+    .intro {
+      font-size: 18px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    #dice {
+      width: 150px;
+      height: 150px;
+      margin: 20px auto;
+    }
+    #dice.shake {
+      animation: shake 0.5s;
+    }
+    @keyframes shake {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(15deg); }
+      50% { transform: rotate(-15deg); }
+      75% { transform: rotate(10deg); }
+      100% { transform: rotate(0deg); }
+    }
+    button {
+      padding: 12px 30px;
+      font-size: 18px;
+      border-radius: 12px;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #result {
+      margin-top: 25px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #004d40;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Simulasi Kejadian Acak: Lempar Dadu 🎲</h1>
+
+  <div class="intro">
+    <p>Lemparan dadu merupakan contoh <em>kejadian acak</em>, yaitu kejadian yang hasilnya tidak dapat dipastikan sebelumnya. Klik tombol <strong>"Lempar Dadu"</strong> di bawah ini untuk melihat hasil acaknya!</p>
+  </div>
+
+  <img id="dice" src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Alea_1.png" alt="Gambar Dadu">
+
+  <div>
+    <button onclick="rollDice()">🎲 Lempar Dadu</button>
+  </div>
+
+  <p id="result">Klik tombol di atas untuk melempar dadu.</p>
+
+  <!-- Suara efek dadu -->
+  <audio id="daduSound" src="dadu.mp3" preload="auto"></audio>
+
+  <script>
+    function rollDice() {
+      const dice = document.getElementById('dice');
+      const result = document.getElementById('result');
+      const daduSound = document.getElementById('daduSound');
+      
+      dice.classList.add('shake');
+      
+      // Play sound effect when button is clicked
+      daduSound.currentTime = 0; // Restart sound if it's still playing
+      daduSound.play();
+
+      setTimeout(() => {
+        const randomNumber = Math.floor(Math.random() * 6) + 1;
+        dice.src = `https://upload.wikimedia.org/wikipedia/commons/${getDiceImage(randomNumber)}`;
+        result.textContent = `Hasil lemparan: ${randomNumber}`;
+        dice.classList.remove('shake');
+      }, 500);
+    }
+
+    function getDiceImage(number) {
+      switch (number) {
+        case 1: return "2/2c/Alea_1.png";
+        case 2: return "8/8d/Alea_2.png";
+        case 3: return "2/2c/Alea_3.png";
+        case 4: return "8/8d/Alea_4.png";
+        case 5: return "5/55/Alea_5.png";
+        case 6: return "f/f4/Alea_6.png";
+      }
+    }
+  </script>
+
+</body>
+</html>
